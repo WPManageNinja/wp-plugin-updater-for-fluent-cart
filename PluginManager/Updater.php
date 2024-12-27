@@ -235,7 +235,7 @@ class Updater
     function http_request_args($args, $url)
     {
         // If it is an https request and we are performing a package download, disable ssl verification
-        if (strpos($url, 'https://') !== false && strpos($url, 'edd_action=package_download')) {
+        if (strpos($url, 'https://') !== false && strpos($url, 'fluent_cart_action=package_download')) {
             $args['sslverify'] = false;
         }
 
@@ -274,7 +274,7 @@ class Updater
         }
 
         $api_params = array(
-            'edd_action' => 'get_version',
+            'fluent_cart_action' => 'get_version',
             'license'    => !empty($data['license']) ? $data['license'] : '',
             'item_id'    => isset($data['item_id']) ? $data['item_id'] : false,
             'slug'       => $data['slug'],
