@@ -10,21 +10,20 @@ class LicenseManager
 
     public function __construct()
     {
-        $this->pluginBaseName = 'fluent-boards-pro/fluent-boards-pro.php';
-        $urlBase = apply_filters('fluent_boards/app_url', admin_url('admin.php?page=fluent-boards#/'));
+        $this->pluginBaseName = 'your-plugin/your-plugin.php';
+        $urlBase = admin_url('admin.php?page=your-plugin-slug#/'); // your plugin dashboard
 
         $this->settings = [
-            'item_id'        => 1,  // variation id
-            'license_server' => 'https://cart.test', // use store url
-
-            'plugin_file'    => FLUENT_BOARDS_PRO_DIR_FILE,
-            'version'        => FLUENT_BOARDS_PRO_VERSION,
-            'store_url'      => 'https://wpmanageninja.com',
-            'purchase_url'   => 'https://fluentboards.com/',
+            'item_id'        => 18272,                   // FluentCart product ID
+            'license_server' => 'https://yourStore.com', // Your store URL where the fluent software licensing plugin installed
+            'plugin_file'    => yourPlugin_FILE,         // File path of your plugin
+            'version'        => yourPlugin_VERSION,      // Current version of your plugin
+            'store_url'      => 'https://yourStore.com', 
+            'purchase_url'   => 'https://yourStore.com',
             'settings_key'   => '__fbs_plugin_license',
             'activate_url'   => $urlBase . 'settings/license',
-            'plugin_title'   => 'FluentBoards Pro',
-            'author'         => 'FluentBoards',
+            'plugin_title'   => 'YourPlugin Pro',
+            'author'         => 'your plugin author name',
         ];
     }
 
@@ -34,12 +33,12 @@ class LicenseManager
             return $links;
         }
 
-        $checkUpdateUrl = esc_url(admin_url('plugins.php?fluentboards_pro_check_update=' . time()));
+        $checkUpdateUrl = esc_url(admin_url('plugins.php?yourplugins_pro_check_update=' . time()));
 
         $row_meta = array(
-            'docs'         => '<a href="' . esc_url(apply_filters('fluent_boards/docs_url', 'https://fluentboards.com/docs/')) . '" aria-label="' . esc_attr__('View FluentCRM documentation', 'fluent-boards-pro') . '">' . esc_html__('Docs', 'fluent-boards-pro') . '</a>',
-            'support'      => '<a href="' . esc_url(apply_filters('fluent_boards/community_support_url', 'https://wpmanageninja.com/support-tickets/#/')) . '" aria-label="' . esc_attr__('Visit Support', 'fluentczmpaign-pro') . '">' . esc_html__('Help & Support', 'fluent-boards-pro') . '</a>',
-            'check_update' => '<a  style="color: #583fad;font-weight: 600;" href="' . $checkUpdateUrl . '" aria-label="' . esc_attr__('Check Update', 'fluent-boards-pro') . '">' . esc_html__('Check Update', 'fluent-boards-pro') . '</a>',
+            'docs'         => '<a href="' . esc_url(apply_filters('fluent_boards/docs_url', 'https://fluentboards.com/docs/')) . '" aria-label="' . esc_attr__('View FluentCRM documentation', 'your-plugin-slug') . '">' . esc_html__('Docs', 'your-plugin-slug') . '</a>',
+            'support'      => '<a href="' . esc_url(apply_filters('fluent_boards/community_support_url', 'https://wpmanageninja.com/support-tickets/#/')) . '" aria-label="' . esc_attr__('Visit Support', 'fluentczmpaign-pro') . '">' . esc_html__('Help & Support', 'your-plugin-slug') . '</a>',
+            'check_update' => '<a  style="color: #583fad;font-weight: 600;" href="' . $checkUpdateUrl . '" aria-label="' . esc_attr__('Check Update', 'your-plugin-slug') . '">' . esc_html__('Check Update', 'your-plugin-slug') . '</a>',
         );
 
         return array_merge($links, $row_meta);
@@ -95,7 +94,7 @@ class LicenseManager
 
         if ($status != 'valid') {
             return [
-                'message'         => sprintf(__('The %s license needs to be activated. %sActivate Now%s', 'fluent-boards-pro'),
+                'message'         => sprintf(__('The %s license needs to be activated. %sActivate Now%s', 'your-plugin-slug'),
                     $this->getVar('plugin_title'), '<a href="' . $this->getVar('activate_url') . '">',
                     '</a>'),
                 'type'            => 'global',
@@ -340,9 +339,9 @@ class LicenseManager
             $renewUrl = $this->getRenewUrl($licenseKey);
             $errorMessage = 'Your license has been expired at ' . $licenseData->expires . ' . Please <a target="_blank" href="' . $renewUrl . '">click here</a> to renew your license';
         } else if ($errorType == 'no_activations_left') {
-            $errorMessage = 'No Activation Site left: You have activated all the sites that your license offer. Please go to wpmanageninja.com account and review your sites. You may deactivate your unused sites from wpmanageninja account or you can purchase another license. <a target="_blank" href="' . $this->getVar('purchase_url') . '">' . __('Click Here to purchase another license', 'fluent-boards-pro') . '</a>';
+            $errorMessage = 'No Activation Site left: You have activated all the sites that your license offer. Please go to wpmanageninja.com account and review your sites. You may deactivate your unused sites from wpmanageninja account or you can purchase another license. <a target="_blank" href="' . $this->getVar('purchase_url') . '">' . __('Click Here to purchase another license', 'your-plugin-slug') . '</a>';
         } else if ($errorType == 'missing') {
-            $errorMessage = __(sprintf('The given license key is not valid. Please verify that your license is correct. You may login to %s and get your valid license key for your purchase.', '<a rel="noopener" target="_blank" href="https://wpmanageninja.com/account/dashboard/#/">wpmanageninja.com account</a>'), 'fluent-boards-pro');
+            $errorMessage = __(sprintf('The given license key is not valid. Please verify that your license is correct. You may login to %s and get your valid license key for your purchase.', '<a rel="noopener" target="_blank" href="https://wpmanageninja.com/account/dashboard/#/">wpmanageninja.com account</a>'), 'your-plugin-slug');
         }
 
         return $errorMessage;
@@ -357,7 +356,7 @@ class LicenseManager
         }
 
         return '<p>Your ' . $this->getVar('plugin_title') . ' license has been <b>expired at ' . date('d M Y', strtotime($licenseData['expires'])) . '</b>, Please ' .
-            '<a href="' . $renewUrl . '"><b>' . __('Click Here to Renew Your License', 'fluent-boards-pro') . '</b></a>' . '</p>';
+            '<a href="' . $renewUrl . '"><b>' . __('Click Here to Renew Your License', 'your-plugin-slug') . '</b></a>' . '</p>';
     }
 
     private function urlGetContentFallBack($url)
