@@ -109,7 +109,7 @@ class LicenseManager
     {
         // data to send in our API request
         $api_params = array(
-            'edd_action' => 'activate_license',
+            'fluent_cart_action' => 'activate_license',
             'license'    => $licenseKey,
             'item_name'  => urlencode($this->getVar('item_name')), // the name of our product in EDD
             'item_id'    => $this->getVar('item_id'),
@@ -164,7 +164,7 @@ class LicenseManager
 
         // data to send in our API request
         $api_params = array(
-            'edd_action' => 'deactivate_license',
+            'fluent_cart_action' => 'deactivate_license',
             'license'    => $licenseKey,
             'item_name'  => urlencode($this->getVar('item_name')), // the name of our product in EDD
             'item_id'    => $this->getVar('item_id'),
@@ -243,7 +243,7 @@ class LicenseManager
         }
 
         $api_params = array(
-            'edd_action' => 'check_license',
+            'fluent_cart_action' => 'check_license',
             'item_id'    => $this->getVar('item_id'),
             'license'    => $licenseKey,
             'item_name'  => urlencode($this->getVar('item_name')),
